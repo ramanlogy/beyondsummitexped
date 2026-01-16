@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond Summit Expeditions | Premium Himalayan Adventures</title>
+    <meta name="description" content="Premier expedition company offering Island Peak, Mera Peak, Ama Dablam, Lobuche, and Himlung climbs. Expert guides, premium service.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0a0a;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* Animated Mountain Background */
+@keyframes cloudDrift {
+    0% { transform: translateX(-100px) translateY(0); }
+    50% { transform: translateX(100px) translateY(-20px); }
+    100% { transform: translateX(-100px) translateY(0); }
+}
+
+@keyframes parallaxSlow {
+    0% { transform: translateY(0) scale(1.05); }
+    100% { transform: translateY(-50px) scale(1.08); }
+}
+
+.cloud-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.15), transparent);
+    animation: cloudDrift 40s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.cloud-layer:nth-child(2) {
+    animation-duration: 60s;
+    animation-delay: -10s;
+}
+
+.cloud-layer:nth-child(3) {
+    animation-duration: 80s;
+    animation-delay: -30s;
+}
+
+/* Premium Carousel */
+.carousel-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    background-size: cover;
+    background-position: center;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.carousel-slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.6) 100%);
+}
+
+/* Interactive Mountain Highlight */
+.mountain-map {
+    position: relative;
+    cursor: crosshair;
+}
+
+.mountain-peak {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,107,53,0.4), transparent);
+    border: 2px solid rgba(255,107,53,0.6);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.mountain-peak:hover {
+    transform: scale(1.5);
+    background: radial-gradient(circle, rgba(255,107,53,0.8), rgba(255,107,53,0.2));
+    box-shadow: 0 0 40px rgba(255,107,53,0.8), 0 0 80px rgba(255,107,53,0.4);
+    z-index: 10;
+}
+
+.peak-tooltip {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(0,0,0,0.95);
+    padding: 12px 20px;
+    border-radius: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+    border: 1px solid rgba(255,107,53,0.5);
+    backdrop-filter: blur(10px);
+}
+
+.mountain-peak:hover .peak-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,53,0.7); }
+    50% { box-shadow: 0 0 0 20px rgba(255,107,53,0); }
+}
+
+/* Hover Cards */
+.hover-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.6s;
+}
+
+.hover-card:hover::before {
+    left: 100%;
+}
+
+.hover-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(255,107,53,0.3);
+}
+
+/* Navigation */
+.nav-glass {
+    background: rgba(10,10,10,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Page Sections */
+.page-section {
+    display: none;
+}
+
+.page-section.active {
+    display: block;
+}
+
+/* Premium Button */
+.btn-premium {
+    position: relative;
+    padding: 16px 40px;
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 12px;
+}
+
+.btn-premium::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-premium:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255,107,53,0.4);
+}
+
+/* Itinerary Download */
+.download-card {
+    background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(247,147,30,0.1));
+    border: 1px solid rgba(255,107,53,0.3);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.4s;
+}
+
+.download-card:hover {
+    background: linear-gradient(135deg, rgba(255,107,53,0.2), rgba(247,147,30,0.2));
+    border-color: rgba(255,107,53,0.6);
+    transform: translateX(10px);
+}
+
+/* Review Stars */
+.star-rating {
+    color: #ff6b35;
+    font-size: 18px;
+}
+
+/* Photo Gallery */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.gallery-item {
+    position: relative;
+    height: 400px;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1) rotate(2deg);
+}
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 60%);
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Loading Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 400px;
+    height: 100vh;
+    background: rgba(10,10,10,0.98);
+    backdrop-filter: blur(20px);
+    transition: right 0.4s;
+    z-index: 1000;
+    padding: 80px 40px;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+/* Gear Checklist */
+.gear-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: all 0.3s;
+}
+
+.gear-item:hover {
+    background: rgba(255,107,53,0.1);
+    transform: translateX(8px);
+}
+
+.gear-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ff6b35;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav-glass fixed top-0 left-0 w-full z-50 transition-all">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
+            <svg class="w-12 h-12 text-orange-500" viewBox="0 0 120 120" fill="none">
+                <path d="M60 25 L45 55 L40 65 L35 80 L30 95 L90 95 L85 80 L80 65 L75 55 L60 25 Z" 
+                      stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M60 25 L60 12" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M60 12 L75 15 L60 22 Z" fill="#003893" stroke="#DC143C" stroke-width="0.8"/>
+                <path d="M60 22 L75 25 L60 32 Z" fill="#003893" stroke="#DC143C" stroke-width="0.8"/>
+            </svg>
+            <div>
+                <div class="font-bold text-xl tracking-tight">BEYOND SUMMIT</div>
+                <div class="text-xs text-orange-500 tracking-widest">NEPAL EXPEDITIONS</div>
+            </div>
+        </div>
+        
+        <div class="hidden md:flex gap-8 text-sm font-medium">
+            <a onclick="showPage('home')" class="hover:text-orange-500 cursor-pointer transition">Home</a>
+            <a onclick="showPage('peaks')" class="hover:text-orange-500 cursor-pointer transition">Peaks</a>
+            <a onclick="showPage('treks')" class="hover:text-orange-500 cursor-pointer transition">Treks</a>
+            <a onclick="showPage('packages')" class="hover:text-orange-500 cursor-pointer transition">Packages</a>
+            <a onclick="showPage('gallery')" class="hover:text-orange-500 cursor-pointer transition">Gallery</a>
+            <a onclick="showPage('about')" class="hover:text-orange-500 cursor-pointer transition">About</a>
+            <a onclick="showPage('contact')" class="hover:text-orange-500 cursor-pointer transition">Contact</a>
+        </div>
+
+        <button class="btn-premium" onclick="showPage('contact')">Book Now</button>
+        <button class="md:hidden text-2xl" onclick="toggleMobileMenu()">☰</button>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <button class="absolute top-6 right-6 text-3xl" onclick="toggleMobileMenu()">×</button>
+    <div class="flex flex-col gap-6 text-lg">
+        <a onclick="showPage('home'); toggleMobileMenu();" class="hover:text-orange-500 cursor-pointer transition">Home</a>
+        <a onclick="showPage('peaks'); toggleMobileMenu();" class="hover:text-orange-500 cursor-pointer transition">Peaks</a>
+        <a onclick="showPage('treks'); toggleMobileMenu();" class="hover:text-orange-500 cursor-pointer transition">Treks</a>
+        <a onclick="showPage('packages'); toggleMobileMenu();" class="hover:text-orange-500 cursor-pointer transition">Packages</a>
+        <a onclick="showPage('gallery'); toggleMobileMenu();" class="hover:text-orange-500 cursor-pointer transition">Gallery</a>
+        <a onclick="showPage('about'); toggleMobileMenu();" class="hover:text-orange-500 cursor-pointer transition">About</a>
+        <a onclick="showPage('contact'); toggleMobileMenu();" class="hover:text-orange-500 cursor-pointer transition">Contact</a>
+    </div>
+</div>
+
+<!-- HOME PAGE -->
+<section id="home" class="page-section active">
+    <!-- Hero Carousel -->
+    <div class="carousel-container">
+        <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920')">
+            <div class="cloud-layer"></div>
+            <div class="cloud-layer"></div>
+            <div class="cloud-layer"></div>
+        </div>
+        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1544281679-53571511c83c?w=1920')"></div>
+        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=1920')"></div>
+        
+        <div class="absolute inset-0 flex items-center justify-center z-10">
+            <div class="text-center px-6 fade-in-up">
+                <h1 class="text-7xl md:text-9xl font-bold mb-6 font-['Cormorant_Garamond']" style="text-shadow: 0 4px 20px rgba(0,0,0,0.8)">
+                    CONQUER THE <br><span class="text-orange-500">HIMALAYAS</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-12 text-gray-200 max-w-3xl mx-auto">
+                    Elite expeditions to Island Peak, Mera Peak, Ama Dablam, Lobuche & Himlung
+                </p>
+                <div class="flex gap-4 justify-center flex-wrap">
+                    <button class="btn-premium" onclick="showPage('peaks')">Explore Peaks</button>
+                    <button class="btn-premium" style="background: transparent; border: 2px solid #ff6b35;" onclick="showPage('treks')">View Treks</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carousel Controls -->
+        <button onclick="changeSlide(-1)" class="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-orange-500 w-14 h-14 rounded-full backdrop-blur transition text-2xl">‹</button>
+        <button onclick="changeSlide(1)" class="absolute right-6 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-orange-500 w-14 h-14 rounded-full backdrop-blur transition text-2xl">›</button>
+    </div>
+
+    <!-- Interactive Mountain Map -->
+    <div class="py-24 px-6 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-7xl mx-auto text-center mb-16 fade-in-up">
+            <h2 class="text-5xl md:text-6xl font-bold mb-4 font-['Cormorant_Garamond']">EXPLORE OUR <span class="text-orange-500">PEAKS</span></h2>
+            <p class="text-gray-400 text-lg">Hover over the mountains to discover details</p>
+        </div>
+        
+        <div class="mountain-map max-w-6xl mx-auto relative">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600" alt="Himalayas" class="w-full h-[600px] object-cover rounded-3xl">
+            
+            <!-- Interactive Peaks -->
+            <div class="mountain-peak" style="top: 25%; left: 20%;">
+                <div class="peak-tooltip">
+                    <div class="font-bold text-orange-500">Island Peak</div>
+                    <div class="text-xs text-gray-400">6,189m • Moderate</div>
+                </div>
+            </div>
+            
+            <div class="mountain-peak" style="top: 35%; left: 45%;">
+                <div class="peak-tooltip">
+                    <div class="font-bold text-orange-500">Mera Peak</div>
+                    <div class="text-xs text-gray-400">6,476m • Challenging</div>
+                </div>
+            </div>
+            
+            <div class="mountain-peak" style="top: 20%; left: 65%;">
+                <div class="peak-tooltip">
+                    <div class="font-bold text-orange-500">Ama Dablam</div>
+                    <div class="text-xs text-gray-400">6,812m • Technical</div>
+                </div>
+            </div>
+            
+            <div class="mountain-peak" style="top: 40%; left: 75%;">
+                <div class="peak-tooltip">
+                    <div class="font-bold text-orange-500">Lobuche East</div>
+                    <div class="text-xs text-gray-400">6,119m • Moderate</div>
+                </div>
+            </div>
+            
+            <div class="mountain-peak" style="top: 15%; left: 85%;">
+                <div class="peak-tooltip">
+                    <div class="font-bold text-orange-500">Himlung Himal</div>
+                    <div class="text-xs text-gray-400">7,126m • Advanced</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="py-20 px-6 bg-gray-900">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="hover-card bg-black/50 p-8 backdrop-blur">
+                <div class="text-5xl font-bold text-orange-500 mb-2">500+</div>
+                <div class="text-gray-400 text-sm uppercase tracking-widest">Summits</div>
+            </div>
+            <div class="hover-card bg-black/50 p-8 backdrop-blur">
+                <div class="text-5xl font-bold text-orange-500 mb-2">15</div>
+                <div class="text-gray-400 text-sm uppercase tracking-widest">Years</div>
+            </div>
+            <div class="hover-card bg-black/50 p-8 backdrop-blur">
+                <div class="text-5xl font-bold text-orange-500 mb-2">98%</div>
+                <div class="text-gray-400 text-sm uppercase tracking-widest">Success Rate</div>
+            </div>
+            <div class="hover-card bg-black/50 p-8 backdrop-blur">
+                <div class="text-5xl font-bold text-orange-500 mb-2">100%</div>
+                <div class="text-gray-400 text-sm uppercase tracking-widest">Safety</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PEAKS PAGE -->
+<section id="peaks" class="page-section pt-24">
+    <div class="min-h-screen py-20 px-6 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="text-6xl md:text-7xl font-bold mb-16 text-center font-['Cormorant_Garamond']">
+                OUR <span class="text-orange-500">PEAKS</span>
+            </h1>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="peaksGrid"></div>
+        </div>
+    </div>
+</section>
+
+<!-- TREKS PAGE -->
+<section id="treks" class="page-section pt-24">
+    <div class="min-h-screen py-20 px-6 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="text-6xl md:text-7xl font-bold mb-16 text-center font-['Cormorant_Garamond']">
+                UPCOMING <span class="text-orange-500">TREKS</span>
+            </h1>
+            
+            <div class="space-y-6" id="treksGrid"></div>
+        </div>
+    </div>
+</section>
+
+<!-- PACKAGES PAGE -->
+<section id="packages" class="page-section pt-24">
+    <div class="min-h-screen py-20 px-6 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="text-6xl md:text-7xl font-bold mb-16 text-center font-['Cormorant_Garamond']">
+                EXPEDITION <span class="text-orange-500">PACKAGES</span>
+            </h1>
+            
+            <div class="grid md:grid-cols-3 gap-8" id="packagesGrid"></div>
+            
+            <!-- Download Itineraries -->
+            <div class="mt-20">
+                <h2 class="text-4xl font-bold mb-8 font-['Cormorant_Garamond']">Download <span class="text-orange-500">Itineraries</span></h2>
+                <div class="grid md:grid-cols-2 gap-6" id="itineraryGrid"></div>
+            </div>
+
+            <!-- Gear Guide -->
+            <div class="mt-20">
+                <h2 class="text-4xl font-bold mb-8 font-['Cormorant_Garamond']">Gear <span class="text-orange-500">Guide</span></h2>
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-orange-500">✓ Essential Gear</h3>
+                        <div id="essentialGear"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-red-500">✗ Not Required</h3>
+                        <div id="notRequiredGear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY PAGE -->
+<section id="gallery" class="page-section pt-24">
+    <div class="min-h-screen py-20 px-6 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="text-6xl md:text-7xl font-bold mb-16 text-center font-['Cormorant_Garamond']">
+                OUR <span class="text-orange-500">ADVENTURES</span>
+            </h1>
+            
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT PAGE -->
+<section id="about" class="page-section pt-24">
+    <div class="min-h-screen py-20 px-6 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="text-6xl md:text-7xl font-bold mb-16 text-center font-['Cormorant_Garamond']">
+                ABOUT <span class="text-orange-500">US</span>
+            </h1>
+            
+            <div class="grid md:grid-cols-2 gap-16 items-center mb-20">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Team" class="rounded-3xl shadow-2xl">
+                </div>
+                <div>
+                    <h2 class="text-4xl font-bold mb-6 font-['Cormorant_Garamond']">Our Story</h2>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-6">
+                        Founded in 2008, Beyond Summit Expeditions has been leading climbers to the world's highest peaks with unmatched expertise and dedication. Based in Kathmandu, Nepal, we combine local knowledge with international standards.
+                    </p>
+                    <p class="text-gray-400 text-lg leading-relaxed">
+                        Our team of expert Sherpa guides and certified mountaineers ensures your safety while creating unforgettable experiences in the Himalayas.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Team -->
+            <h2 class="text-4xl font-bold mb-12 text-center font-['Cormorant_Garamond']">Our <span class="text-orange-500">Team</span></h2>
+            <div class="grid md:grid-cols-3 gap-12" id="teamGrid"></div>
+
+            <!-- Reviews -->
+            <div class="mt-20">
+                <h2 class="text-4xl font-bold mb-12 text-center font-['Cormorant_Garamond']">Client <span class="text-orange-500">Reviews</span></h2>
+                <div class="grid md:grid-cols-2 gap-8" id="reviewsGrid"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT PAGE -->
+<section id="contact" class="page-section pt-24">
+    <div class="min-h-screen py-20 px-6 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-6xl md:text-7xl font-bold mb-16 text-center font-['Cormorant_Garamond']">
+                GET IN <span class="text-orange-500">TOUCH</span>
+            </h1>
+            
+            <div class="grid md:grid-cols-2 gap-16">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+                    <div class="space-y-4 text-gray-400">
+                        <p><strong class="text-white">Location:</strong><br>Thamel, Kathmandu, Nepal</p>
+                        <p><strong class="text-white">Phone:</strong><br>+977 1-4567890</p>
+                        <p><strong class="text-white">Email:</strong><br>info@beyondsummit.com</p>
+                        <p><strong class="text-white">Hours:</strong><br>Mon-Sat: 9AM - 6PM</p>
+                    </div>
+                </div>
+                
+                <form class="space-y-6">
+                    <input type="text" placeholder="Your Name" class="w-full bg-white/5 border border-white/10 rounded-lg px-6 py-4 focus:outline-none focus:border-orange-500 transition">
+                    <input type="email" placeholder="Your Email" class="w-full bg-white/5 border border-white/10 rounded-lg px-6 py-4 focus:outline-none focus:border-orange-500 transition">
+                    <select class="w-full bg-white/5 border border-white/10 rounded-lg px-6 py-4 focus:outline-none focus:border-orange-500 transition">
+                        <option>Select Peak/Trek</option>
+                        <option>Island Peak</option>
+                        <option>Mera Peak</option>
+                        <option>Ama Dablam</option>
+                        <option>Lobuche East</option>
+                        <option>Himlung Himal</option>
+                    </select>
+                    <textarea placeholder="Your Message" rows="5" class="w-full bg-white/5 border border-white/10 rounded-lg px-6 py-4 focus:outline-none focus:border-orange-500 transition"></textarea>
+                    <button type="submit" class="btn-premium w-full">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-black border-t border-white/10 py-16 px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-4 gap-12 mb-12">
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-orange-500">Quick Links</h4>
+                <div class="space-y-2 text-gray-400">
+                    <a onclick="showPage('home')" class="block hover:text-orange-500 cursor-pointer transition">Home</a>
+                    <a onclick="showPage('peaks')" class="block hover:text-orange-500 cursor-pointer transition">Peaks</a>
+                    <a onclick="showPage('treks')" class="block hover:text-orange-500 cursor-pointer transition">Treks</a>
+                    <a onclick="showPage('packages')" class="block hover:text-orange-500 cursor-pointer transition">Packages</a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-orange-500">Resources</h4>
+                <div class="space-y-2 text-gray-400">
+                    <a href="#" class="block hover:text-orange-500 transition">Download Itineraries</a>
+                    <a href="#" class="block hover:text-orange-500 transition">Gear Guide</a>
+                    <a href="#" class="block hover:text-orange-500 transition">Training Tips</a>
+                    <a href="#" class="block hover:text-orange-500 transition">FAQs</a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-orange-500">Company</h4>
+                <div class="space-y-2 text-gray-400">
+                    <a onclick="showPage('about')" class="block hover:text-orange-500 cursor-pointer transition">About Us</a>
+                    <a onclick="showPage('about')" class="block hover:text-orange-500 cursor-pointer transition">Our Team</a>
+                    <a href="#" class="block hover:text-orange-500 transition">Safety Protocols</a>
+                    <a href="#" class="block hover:text-orange-500 transition">Sustainability</a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-orange-500">Follow Us</h4>
+                <div class="flex gap-4 mb-6">
+                    <a href="#" class="w-10 h-10 bg-white/5 hover:bg-orange-500 rounded-full flex items-center justify-center transition">f</a>
+                    <a href="#" class="w-10 h-10 bg-white/5 hover:bg-orange-500 rounded-full flex items-center justify-center transition">📷</a>
+                    <a href="#" class="w-10 h-10 bg-white/5 hover:bg-orange-500 rounded-full flex items-center justify-center transition">in</a>
+                </div>
+                <p class="text-gray-400 text-sm">Subscribe to our newsletter</p>
+                <input type="email" placeholder="Your email" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 mt-2 text-sm">
+            </div>
+        </div>
+        
+        <div class="border-t border-white/10 pt-8 text-center text-gray-500 text-sm">
+            © 2025 Beyond Summit Expeditions. All rights reserved. | Kathmandu, Nepal
+        </div>
+    </div>
+</footer>
+
+<script>
+// Data
+const peaks = [
+    { name: 'Island Peak', height: '6,189m', difficulty: 'Moderate', duration: '15 days', price: '$2,500', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800', description: 'Perfect introduction to Himalayan climbing with stunning views' },
+    { name: 'Mera Peak', height: '6,476m', difficulty: 'Challenging', duration: '18 days', price: '$3,200', image: 'https://images.unsplash.com/photo-1544281679-53571511c83c?w=800', description: 'Highest trekking peak in Nepal with incredible summit panorama' },
+    { name: 'Ama Dablam', height: '6,812m', difficulty: 'Technical', duration: '28 days', price: '$8,500', image: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800', description: 'The Matterhorn of the Himalayas - technical and beautiful' },
+    { name: 'Lobuche East', height: '6,119m', difficulty: 'Moderate', duration: '16 days', price: '$2,800', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800', description: 'Dramatic peak near Everest Base Camp' },
+    { name: 'Himlung Himal', height: '7,126m', difficulty: 'Advanced', duration: '32 days', price: '$9,800', image: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800', description: 'Remote 7000m peak for experienced climbers' }
+];
+
+const treks = [
+    { name: 'Everest Base Camp Trek', dates: 'March 15 - March 30, 2025', days: '15', difficulty: 'Moderate', spots: '8', price: '$1,850' },
+    { name: 'Annapurna Circuit', dates: 'April 5 - April 22, 2025', days: '17', difficulty: 'Challenging', spots: '12', price: '$1,650' },
+    { name: 'Manaslu Circuit', dates: 'May 1 - May 18, 2025', days: '17', difficulty: 'Challenging', spots: '10', price: '$1,950' },
+    { name: 'Langtang Valley Trek', dates: 'June 10 - June 20, 2025', days: '10', difficulty: 'Easy', spots: '15', price: '$950' }
+];
+
+const packages = [
+    { name: 'Basic Package', price: 'From $2,500', features: ['Experienced Guide', 'Accommodation', 'Meals During Trek', 'Permits', 'Ground Transport'] },
+    { name: 'Premium Package', price: 'From $4,500', features: ['IFMGA Guide', 'Premium Hotels', 'All Meals', 'Permits & Insurance', 'Helicopter Standby', 'Personal Porter'] },
+    { name: 'VIP Package', price: 'From $8,500', features: ['Private Expedition', '1:1 Guide Ratio', 'Luxury Accommodation', 'Gourmet Meals', 'Satellite Phone', 'Medical Support', 'Photography Service'] }
+];
+
+const itineraries = [
+    { peak: 'Island Peak', size: '2.4 MB', format: 'PDF' },
+    { peak: 'Mera Peak', size: '3.1 MB', format: 'PDF' },
+    { peak: 'Ama Dablam', size: '4.2 MB', format: 'PDF' },
+    { peak: 'Lobuche East', size: '2.8 MB', format: 'PDF' },
+    { peak: 'Himlung Himal', size: '3.9 MB', format: 'PDF' }
+];
+
+const essentialGear = [
+    'Mountaineering Boots', 'Crampons', 'Ice Axe', 'Harness', 'Helmet', 
+    'Down Jacket', 'Sleeping Bag (-20°C)', 'Headlamp', 'Sunglasses', 'Trekking Poles'
+];
+
+const notRequired = [
+    'Tent (Provided)', 'Cooking Equipment', 'Rope & Hardware', 
+    'Oxygen System', 'First Aid Kit', 'Satellite Phone'
+];
+
+const team = [
+    { name: 'Pasang Sherpa', role: 'Lead Guide', summits: '12x Everest', image: 'https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=400' },
+    { name: 'Lakpa Sherpa', role: 'Technical Expert', summits: '8x 8000m peaks', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400' },
+    { name: 'Dawa Sherpa', role: 'Base Camp Manager', summits: '15 years experience', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400' }
+];
+
+const reviews = [
+    { name: 'John Smith', country: 'USA', rating: 5, text: 'Incredible experience! The team was professional, safe, and made my Island Peak summit dream come true.', peak: 'Island Peak 2024' },
+    { name: 'Sarah Johnson', country: 'UK', rating: 5, text: 'Best decision ever! Ama Dablam was challenging but the guides were exceptional. Highly recommend!', peak: 'Ama Dablam 2024' },
+    { name: 'Michael Chen', country: 'Australia', rating: 5, text: 'Mera Peak expedition exceeded all expectations. Professional team, great food, amazing views!', peak: 'Mera Peak 2023' },
+    { name: 'Emma Wilson', country: 'Canada', rating: 5, text: 'Lobuche East was the perfect challenge. The crew took care of everything. Will return!', peak: 'Lobuche 2024' }
+];
+
+const gallery = [
+    { url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800', title: 'Summit Day - Island Peak' },
+    { url: 'https://images.unsplash.com/photo-1544281679-53571511c83c?w=800', title: 'Sunrise at Base Camp' },
+    { url: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800', title: 'Ama Dablam South Face' },
+    { url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800', title: 'Team on Mera Peak' },
+    { url: 'https://images.unsplash.com/photo-1544281679-53571511c83c?w=800', title: 'Crossing Crevasse' },
+    { url: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800', title: 'Himlung Camp 2' }
+];
+
+// Render Functions
+function renderPeaks() {
+    const grid = document.getElementById('peaksGrid');
+    grid.innerHTML = peaks.map(p => `
+        <div class="hover-card bg-black/50 rounded-2xl overflow-hidden backdrop-blur">
+            <img src="${p.image}" alt="${p.name}" class="w-full h-64 object-cover">
+            <div class="p-6">
+                <h3 class="text-2xl font-bold mb-2">${p.name}</h3>
+                <p class="text-orange-500 mb-2">${p.height} • ${p.difficulty}</p>
+                <p class="text-gray-400 text-sm mb-4">${p.description}</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-2xl font-bold">${p.price}</span>
+                    <button class="btn-premium" style="padding: 12px 24px;">Book Now</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderTreks() {
+    const grid = document.getElementById('treksGrid');
+    grid.innerHTML = treks.map(t => `
+        <div class="hover-card bg-black/50 rounded-2xl p-8 backdrop-blur grid md:grid-cols-5 gap-6 items-center">
+            <div class="md:col-span-2">
+                <h3 class="text-2xl font-bold mb-2">${t.name}</h3>
+                <p class="text-gray-400">${t.dates}</p>
+            </div>
+            <div class="text-center">
+                <div class="text-orange-500 font-bold">${t.days} Days</div>
+                <div class="text-xs text-gray-500">Duration</div>
+            </div>
+            <div class="text-center">
+                <div class="text-orange-500 font-bold">${t.spots} Spots</div>
+                <div class="text-xs text-gray-500">Available</div>
+            </div>
+            <div class="text-right">
+                <div class="text-3xl font-bold mb-2">${t.price}</div>
+                <button class="btn-premium">Reserve</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderPackages() {
+    const grid = document.getElementById('packagesGrid');
+    grid.innerHTML = packages.map((p, i) => `
+        <div class="hover-card bg-black/50 rounded-2xl p-8 backdrop-blur ${i === 1 ? 'border-2 border-orange-500' : ''}">
+            ${i === 1 ? '<div class="text-orange-500 text-xs font-bold mb-4 uppercase tracking-widest">Most Popular</div>' : ''}
+            <h3 class="text-3xl font-bold mb-4">${p.name}</h3>
+            <div class="text-4xl font-bold text-orange-500 mb-8">${p.price}</div>
+            <ul class="space-y-3 mb-8">
+                ${p.features.map(f => `<li class="flex items-center gap-2 text-gray-400"><span class="text-orange-500">✓</span> ${f}</li>`).join('')}
+            </ul>
+            <button class="btn-premium w-full">Choose Package</button>
+        </div>
+    `).join('');
+}
+
+function renderItineraries() {
+    const grid = document.getElementById('itineraryGrid');
+    grid.innerHTML = itineraries.map(i => `
+        <div class="download-card cursor-pointer">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h4 class="font-bold text-lg mb-1">${i.peak} Itinerary</h4>
+                    <p class="text-gray-400 text-sm">${i.format} • ${i.size}</p>
+                </div>
+                <button class="bg-orange-500 hover:bg-orange-600 w-12 h-12 rounded-full flex items-center justify-center transition">↓</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderGear() {
+    document.getElementById('essentialGear').innerHTML = essentialGear.map(g => `
+        <div class="gear-item">
+            <div class="gear-checkbox">✓</div>
+            <span>${g}</span>
+        </div>
+    `).join('');
+    
+    document.getElementById('notRequiredGear').innerHTML = notRequired.map(g => `
+        <div class="gear-item">
+            <div class="gear-checkbox" style="border-color: #ef4444;">✗</div>
+            <span class="text-gray-500">${g}</span>
+        </div>
+    `).join('');
+}
+
+function renderGallery() {
+    const grid = document.getElementById('galleryGrid');
+    grid.innerHTML = gallery.map(g => `
+        <div class="gallery-item">
+            <img src="${g.url}" alt="${g.title}">
+            <div class="gallery-overlay">
+                <h3 class="text-xl font-bold">${g.title}</h3>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderTeam() {
+    const grid = document.getElementById('teamGrid');
+    grid.innerHTML = team.map(t => `
+        <div class="text-center hover-card bg-black/50 rounded-2xl p-8 backdrop-blur">
+            <img src="${t.image}" alt="${t.name}" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-orange-500">
+            <h3 class="text-2xl font-bold mb-2">${t.name}</h3>
+            <p class="text-orange-500 mb-2">${t.role}</p>
+            <p class="text-gray-400 text-sm">${t.summits}</p>
+        </div>
+    `).join('');
+}
+
+function renderReviews() {
+    const grid = document.getElementById('reviewsGrid');
+    grid.innerHTML = reviews.map(r => `
+        <div class="hover-card bg-black/50 rounded-2xl p-8 backdrop-blur">
+            <div class="star-rating mb-4">${'★'.repeat(r.rating)}</div>
+            <p class="text-gray-300 mb-6 italic">"${r.text}"</p>
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center font-bold">
+                    ${r.name.charAt(0)}
+                </div>
+                <div>
+                    <div class="font-bold">${r.name}</div>
+                    <div class="text-sm text-gray-400">${r.country} • ${r.peak}</div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Navigation
+let currentPage = 'home';
+function showPage(page) {
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+    document.getElementById(page).classList.add('active');
+    currentPage = page;
+    window.scrollTo(0, 0);
+    
+    // Render content for the page
+    if (page === 'peaks') renderPeaks();
+    if (page === 'treks') renderTreks();
+    if (page === 'packages') { renderPackages(); renderItineraries(); renderGear(); }
+    if (page === 'gallery') renderGallery();
+    if (page === 'about') { renderTeam(); renderReviews(); }
+}
+
+function toggleMobileMenu() {
+    document.getElementById('mobileMenu').classList.toggle('active');
+}
+
+// Carousel
+let currentSlide = 0;
+const slides = document.querySelectorAll('.carousel-slide');
+
+function showSlide(n) {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (n + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+}
+
+function changeSlide(n) {
+    showSlide(currentSlide + n);
+}
+
+// Auto carousel
+setInterval(() => changeSlide(1), 5000);
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    renderPeaks();
+});
+</script>
+
+</body>
+</html>
